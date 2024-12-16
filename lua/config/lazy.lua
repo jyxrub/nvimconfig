@@ -18,6 +18,8 @@ vim.opt.rtp:prepend(lazypath)
 -- Make sure to setup `mapleader` and `maplocalleader` before
 -- loading lazy.nvim so that mappings are correct.
 -- This is also a good place to setup other settings (vim.opt)
+vim.opt.number = true
+vim.opt.relativenumber = true
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
@@ -27,18 +29,16 @@ require("lazy")
 require("lazy").setup(
 {
 	{import = "config.plugins"},
-	{import = "config.plugins.lsp"},
+   	{import = "config.plugins.lsp"},
 },
 {
-	install = {
-		colorscheme = {"nightfly"}
-	},
-	checker = {
+	install = { colorscheme = {"nightfly"} },
+	checker = { 
 		enabled = true,
-		notify = false,
+		notify = false 
 	},
 	change_detection = {
-		notify = false,
+		notify = false
 	}
-},
+}
 )
