@@ -14,11 +14,5 @@ return{
       end,
       desc = "Buffer Local Keymaps (which-key)",
     },
-    {
-        "<leader>b", group = "b", desc = "Buffer operations"
-    },
-    {
-        "<leader>"
-    }
   },
 }

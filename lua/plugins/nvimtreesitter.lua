@@ -4,9 +4,9 @@ return {
     event = "VeryLazy",
     opts = {
         ensure_installed = {
-            { "lua", "python", "cpp", "c", "fortran", "gnuplot" }
+             "lua", "python", "cpp", "c", "fortran", "gnuplot"
         },
         highlight = { enable = true }
-    },
+    }
 }
 
