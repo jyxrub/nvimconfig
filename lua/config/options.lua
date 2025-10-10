@@ -129,6 +129,18 @@ vim.api.nvim_create_autocmd("TermOpen", {
   end,
 })
 
+-- Wrap specific files
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "markdown",
+  callback = function()
+    vim.opt_local.wrap = true
+    vim.opt_local.linebreak = true
+    vim.opt_local.textwidth = 0
+    vim.opt_local.wrapmargin = 0
+    vim.opt_local.colorcolumn = "80"
+  end,
+})
+
 -- terminal
 local terminal_state = {
   buf = nil,
