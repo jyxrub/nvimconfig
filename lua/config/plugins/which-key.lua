@@ -115,12 +115,48 @@ return {
 
 				-- Navigation: Jump to end (using treesitter textobjects)
 				{ "<leader>j", group = "Jump" },
-				{ "<leader>jf", "]F", desc = "Jump to end of function" },
-				{ "<leader>jc", "]C", desc = "Jump to end of class" },
-				{ "<leader>jb", "]B", desc = "Jump to end of block" },
-				{ "<leader>jF", "[F", desc = "Jump to start of function" },
-				{ "<leader>jC", "[C", desc = "Jump to start of class" },
-				{ "<leader>jB", "[B", desc = "Jump to start of block" },
+				{
+					"<leader>jf",
+					function()
+						vim.cmd("normal! ]F")
+					end,
+					desc = "Jump to end of function",
+				},
+				{
+					"<leader>jc",
+					function()
+						vim.cmd("normal! ]C")
+					end,
+					desc = "Jump to end of class",
+				},
+				{
+					"<leader>jb",
+					function()
+						vim.cmd("normal! ]B")
+					end,
+					desc = "Jump to end of block",
+				},
+				{
+					"<leader>jF",
+					function()
+						vim.cmd("normal! [F")
+					end,
+					desc = "Jump to start of function",
+				},
+				{
+					"<leader>jC",
+					function()
+						vim.cmd("normal! [C")
+					end,
+					desc = "Jump to start of class",
+				},
+				{
+					"<leader>jB",
+					function()
+						vim.cmd("normal! [B")
+					end,
+					desc = "Jump to start of block",
+				},
 			})
 		end,
 	},
