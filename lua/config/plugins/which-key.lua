@@ -2,25 +2,33 @@ return {
 	{
 		"folke/which-key.nvim",
 		event = "VeryLazy",
-		config = function()
+		opts = {
+			-- PERFORMANCE: Configure timeouts
+			delay = 500, -- Matches vim.opt.timeoutlen
+			preset = "modern",
+			icons = {
+				mappings = vim.g.have_nerd_font ~= false,
+			},
+		},
+		config = function(_, opts)
 			local wk = require("which-key")
-			local tsbuiltin = require("telescope.builtin")
-			wk.add({
-				-- mode = { "n", "v" },
-				-- noremap = true,
-				-- silent = true,
-				-- Basics
+			wk.setup(opts)
 
-				---- Delete without yanking
-				--				{ "<leader>d", '"_d', desc = "Delete without yanking" },
-				---- Move lines up/down
-				{ "<A-j>", ":m .+1<CR>==", desc = "Move line down" },
-				{ "<A-k>", ":m .-2<CR>==", desc = "Move line up" },
-				{ "<A-j>", ":m '>+1<CR>gv=gv", desc = "Move selection down" },
-				{ "<A-k>", ":m '<-2<CR>gv=gv", desc = "Move selection up" },
-				---- Better indenting in visual mode
-				{ "<", "<gv", { desc = "Indent left and reselect" } },
-				{ ">", ">gv", { desc = "Indent right and reselect" } },
+			local tsbuiltin = require("telescope.builtin")
+
+			wk.add({
+				-- Basic editing
+				{ "<leader>d", '"_d', desc = "Delete without yanking", mode = { "n", "v" } },
+
+				-- Move lines (keep Alt bindings for convenience)
+				{ "<A-j>", ":m .+1<CR>==", desc = "Move line down", mode = "n" },
+				{ "<A-k>", ":m .-2<CR>==", desc = "Move line up", mode = "n" },
+				{ "<A-j>", ":m '>+1<CR>gv=gv", desc = "Move selection down", mode = "v" },
+				{ "<A-k>", ":m '<-2<CR>gv=gv", desc = "Move selection up", mode = "v" },
+
+				-- Visual mode indenting
+				{ "<", "<gv", desc = "Indent left and reselect", mode = "v" },
+				{ ">", ">gv", desc = "Indent right and reselect", mode = "v" },
 
 				-- Buffers
 				{ "<leader>b", group = "Buffers" },
@@ -30,37 +38,41 @@ return {
 				{ "<leader>bl", "<cmd>buffers<cr>", desc = "List buffers" },
 				{ "<leader>bo", "<cmd>%bd|e#<cr>", desc = "Delete all other buffers" },
 				{ "<leader>bO", "<cmd>%bd<cr>", desc = "Delete all buffers" },
+
 				-- Windows
-				---- Window navigation
-				{ "<C-h>", "<C-w>h", desc = "Move to left window" },
-				{ "<C-j>", "<C-w>j", desc = "Move to bottom window" },
-				{ "<C-k>", "<C-w>k", desc = "Move to top window" },
-				{ "<C-l>", "<C-w>l", desc = "Move to right window" },
-				{ "<C-Up>", ":resize +2<CR>", desc = "Increase window height" },
-				{ "<C-Down>", ":resize -2<CR>", desc = "Decrease window height" },
-				{ "<C-Left>", ":vertical resize -2<CR>", desc = "Decrease window width" },
-				{ "<C-Right>", ":vertical resize +2<CR>", desc = "Increase window width" },
 				{ "<leader>w", group = "Windows" },
 				{ "<leader>wv", "<cmd>vsplit<CR>", desc = "Split window vertically" },
 				{ "<leader>ws", "<cmd>split<CR>", desc = "Split window horizontally" },
 				{ "<leader>w=", "<cmd>wincmd =<CR>", desc = "Equal size windows" },
-				{ "<leader>wc", "<cmd>close<CR>", desc = "Close the current window" },
-				{ "<leader>wo", "<cmd>only<CR>", desc = "Close the other windows" },
+				{ "<leader>wc", "<cmd>close<CR>", desc = "Close current window" },
+				{ "<leader>wo", "<cmd>only<CR>", desc = "Close other windows" },
 				{ "<leader>wh", "<C-w>h", desc = "Jump to left window" },
 				{ "<leader>wj", "<C-w>j", desc = "Jump to down window" },
 				{ "<leader>wk", "<C-w>k", desc = "Jump to up window" },
 				{ "<leader>wl", "<C-w>l", desc = "Jump to right window" },
+
+				-- Quick window navigation (keep Ctrl for convenience)
+				{ "<C-h>", "<C-w>h", desc = "Move to left window" },
+				{ "<C-j>", "<C-w>j", desc = "Move to bottom window" },
+				{ "<C-k>", "<C-w>k", desc = "Move to top window" },
+				{ "<C-l>", "<C-w>l", desc = "Move to right window" },
+
+				-- Window resizing (keep Ctrl-arrows)
+				{ "<C-Up>", ":resize +2<CR>", desc = "Increase window height" },
+				{ "<C-Down>", ":resize -2<CR>", desc = "Decrease window height" },
+				{ "<C-Left>", ":vertical resize -2<CR>", desc = "Decrease window width" },
+				{ "<C-Right>", ":vertical resize +2<CR>", desc = "Increase window width" },
+
 				-- Telescope
 				{ "<leader>f", group = "Find" },
-				{ "<leader>ff", tsbuiltin.find_files, desc = "[F]ind [F]iles" },
-				{ "<leader>fg", tsbuiltin.live_grep, desc = "[F]ind by [G]rep" },
-				{ "<leader>fw", tsbuiltin.grep_string, desc = "[F]ind current [W]ord" },
-				{ "<leader>fd", tsbuiltin.diagnostics, desc = "[F]ind [D]iagnostics" },
-				{ "<leader>fk", tsbuiltin.keymaps, desc = "[F]ind [K]eymaps" },
+				{ "<leader>ff", tsbuiltin.find_files, desc = "Find files" },
+				{ "<leader>fg", tsbuiltin.live_grep, desc = "Find by grep" },
+				{ "<leader>fw", tsbuiltin.grep_string, desc = "Find current word" },
+				{ "<leader>fd", tsbuiltin.diagnostics, desc = "Find diagnostics" },
+				{ "<leader>fk", tsbuiltin.keymaps, desc = "Find keymaps" },
 				{
 					"<leader>fb",
 					function()
-						-- You can pass additional configuration to Telescope to change the theme, layout, etc.
 						tsbuiltin.current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
 							winblend = 10,
 							previewer = false,
@@ -76,27 +88,40 @@ return {
 							prompt_title = "Live Grep in Open Files",
 						})
 					end,
-					desc = "[F]ind in Open Files",
+					desc = "Find in open files",
 				},
-				-- Lsp settings
+
+				-- LSP Goto group (populated by lsp.lua)
 				{ "<leader>g", group = "Goto" },
+
+				-- Folding operations (all under <leader>z)
+				{ "<leader>z", group = "Folding" },
+				{ "<leader>za", "za", desc = "Toggle fold" },
+				{ "<leader>zA", "zA", desc = "Toggle fold recursively" },
+				{ "<leader>zo", "zo", desc = "Open fold" },
+				{ "<leader>zO", "zO", desc = "Open fold recursively" },
+				{ "<leader>zc", "zc", desc = "Close fold" },
+				{ "<leader>zC", "zC", desc = "Close fold recursively" },
+				{ "<leader>zR", "zR", desc = "Open all folds" },
+				{ "<leader>zM", "zM", desc = "Close all folds" },
+				{ "<leader>zr", "zr", desc = "Reduce folding" },
+				{ "<leader>zm", "zm", desc = "More folding" },
+				{ "<leader>zv", "zv", desc = "View cursor line" },
+				{ "<leader>zx", "zx", desc = "Update folds" },
+				{ "<leader>zj", "zj", desc = "Next fold" },
+				{ "<leader>zk", "zk", desc = "Previous fold" },
+				{ "<leader>z[", "[z", desc = "Start of fold" },
+				{ "<leader>z]", "]z", desc = "End of fold" },
+
+				-- Navigation: Jump to end (using treesitter textobjects)
+				{ "<leader>j", group = "Jump" },
+				{ "<leader>jf", "]F", desc = "Jump to end of function" },
+				{ "<leader>jc", "]C", desc = "Jump to end of class" },
+				{ "<leader>jb", "]B", desc = "Jump to end of block" },
+				{ "<leader>jF", "[F", desc = "Jump to start of function" },
+				{ "<leader>jC", "[C", desc = "Jump to start of class" },
+				{ "<leader>jB", "[B", desc = "Jump to start of block" },
 			})
 		end,
-
-		--
-		--        { '<leader>d', group = 'Diagnostics' },
-		--        { '<leader>dc', desc = 'Open diagnostic float' },
-		--        { '<leader>d]', desc = 'Next diagnostic' },
-		--        { '<leader>d[', desc = 'Previous diagnostic' },
-		--        { '<leader>da', desc = 'Set location list' },
-		--
-		--         { "<leader>g",  group = "[G]oto (LSP)" },
-		--         { "<leader>gd", desc = "Goto Definition" },
-		--         { "<leader>gD", desc = "Goto Declaration" },
-		--         { "<leader>gr", desc = "Goto References" },
-		--         { "<leader>gI", desc = "Goto Implementation" },
-		--         { "<leader>gT", desc = "Type Definition" },
-		--         { "<leader>gs", desc = "Document Symbols" },
-		--         { "<leader>gS", desc = "Workspace Symbols" },
 	},
 }
