@@ -51,8 +51,6 @@ vim.opt.foldtext = ""                  -- Use treesitter for fold text (Neovim 0
 -- Cleaner fold display
 vim.opt.fillchars = {
   fold = " ",
-  foldopen = "",
-  foldclose = "",
   foldsep = " ",
 }
 
