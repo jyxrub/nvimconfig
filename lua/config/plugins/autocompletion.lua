@@ -28,7 +28,7 @@ return {
 					--   end,
 					-- },
 				},
-				opts = {},
+				-- No explicit config needed - blink.cmp handles LuaSnip integration
 			},
 			"folke/lazydev.nvim",
 		},
