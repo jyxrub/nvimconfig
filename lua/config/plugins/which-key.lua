@@ -70,6 +70,10 @@ return {
         { "<leader>fw", tsbuiltin.grep_string,     desc = "Find current word" },
         { "<leader>fd", tsbuiltin.diagnostics,     desc = "Find diagnostics" },
         { "<leader>fk", tsbuiltin.keymaps,         desc = "Find keymaps" },
+        { "<leader>fr", tsbuiltin.oldfiles,        desc = "Find recent files" },
+        { "<leader>f.", tsbuiltin.resume,          desc = "Resume last search" },
+        { "<leader>fc", tsbuiltin.commands,        desc = "Find commands" },
+        { "<leader>fh", tsbuiltin.help_tags,       desc = "Find help" },
         {
           "<leader>fb",
           function()
