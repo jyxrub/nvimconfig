@@ -8,7 +8,7 @@ return {
 	{
 		"catppuccin/nvim",
 		name = "catppuccin",
-		lazy = true,
+		lazy = false,
 		opts = {
 			flavour = "latte",
 			transparent_background = false,
@@ -17,7 +17,7 @@ return {
 	{
 		"rose-pine/neovim",
 		name = "rose-pine",
-		lazy = true,
+		lazy = false,
 		opts = {
 			variant = "dawn",
 			dark_variant = "main",
