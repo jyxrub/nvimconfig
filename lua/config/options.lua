@@ -1,4 +1,3 @@
-vim.cmd.colorscheme("unokai")
 -- Basic settins
 vim.opt.number = true         -- Line numbers
 vim.opt.relativenumber = true -- Relative line numbers
@@ -35,7 +34,7 @@ vim.opt.pumblend = 10                             -- Popup menu transparency
 vim.opt.winblend = 0                              -- Floating window transparency
 vim.opt.conceallevel = 0                          -- Don't hide markup
 vim.opt.concealcursor = ""                        -- Don't hide cursor line markup
-vim.opt.lazyredraw = true                         -- Don't redraw during macros
+vim.opt.lazyredraw = false                        -- lazyredraw can break treesitter highlighting
 vim.opt.synmaxcol = 300                           -- Syntax highlighting limit
 
 -- Folding settings (Treesitter-based)
@@ -89,6 +88,8 @@ vim.g.maplocalleader = " " -- Set local leader key
 
 -- All other keymaps are defined in which-key.lua for centralized management
 
+local augroup = vim.api.nvim_create_augroup("UserOptions", { clear = true })
+
 -- Highlight yanked text
 vim.api.nvim_create_autocmd("TextYankPost", {
   group = augroup,
@@ -109,6 +110,7 @@ vim.api.nvim_create_autocmd("TermOpen", {
 
 -- Wrap specific files
 vim.api.nvim_create_autocmd("FileType", {
+  group = augroup,
   pattern = "markdown",
   callback = function()
     vim.opt_local.wrap = true

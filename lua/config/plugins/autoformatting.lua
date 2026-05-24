@@ -24,13 +24,27 @@ return {
 
 		local sources = {
 			diagnostics.checkmake,
-			formatting.prettier.with({ filetypes = { "html", "json", "yaml", "markdown" } }),
+			formatting.prettier.with({
+				filetypes = {
+					"html",
+					"json",
+					"yaml",
+					"markdown",
+					"javascript",
+					"javascriptreact",
+					"typescript",
+					"typescriptreact",
+					"css",
+					"scss",
+				},
+			}),
 			formatting.stylua,
 			formatting.shfmt.with({ args = { "-i", "4" } }),
 			formatting.terraform_fmt,
 			formatting.clang_format.with({ filetypes = { "c", "cpp", "objc", "objcpp", "cuda" } }),
 			require("none-ls.formatting.ruff").with({ extra_args = { "--extend-select", "I" } }),
 			require("none-ls.formatting.ruff_format"),
+			require("none-ls.diagnostics.eslint_d"), -- ESLint for JS/TS linting
 		}
 
 		local augroup = vim.api.nvim_create_augroup("LspFormatting", {})

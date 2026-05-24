@@ -139,11 +139,37 @@ return {
 				-- rust_analyzer = {},
 				-- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
 				--
-				-- Some languages (like typescript) have entire language plugins that can be useful:
-				--    https://github.com/pmizio/typescript-tools.nvim
-				--
-				-- But for many setups, the LSP (`ts_ls`) will work just fine
-				-- ts_ls = {},
+				-- TypeScript/JavaScript LSP - vtsls is faster and more feature-rich than ts_ls
+				vtsls = {
+					settings = {
+						typescript = {
+							inlayHints = {
+								parameterNames = { enabled = "literals" },
+								parameterTypes = { enabled = true },
+								variableTypes = { enabled = true },
+								propertyDeclarationTypes = { enabled = true },
+								functionLikeReturnTypes = { enabled = true },
+								enumMemberValues = { enabled = true },
+							},
+							suggest = {
+								completeFunctionCalls = true,
+							},
+						},
+						javascript = {
+							inlayHints = {
+								parameterNames = { enabled = "literals" },
+								parameterTypes = { enabled = true },
+								variableTypes = { enabled = true },
+								propertyDeclarationTypes = { enabled = true },
+								functionLikeReturnTypes = { enabled = true },
+								enumMemberValues = { enabled = true },
+							},
+							suggest = {
+								completeFunctionCalls = true,
+							},
+						},
+					},
+				},
 				--
 				lua_ls = {
 					on_init = function(client)
@@ -192,6 +218,8 @@ return {
 			local ensure_installed = vim.tbl_keys(servers or {})
 			vim.list_extend(ensure_installed, {
 				"stylua", -- Used to format Lua code
+				"vtsls", -- TypeScript/JavaScript LSP
+				"eslint_d", -- Fast ESLint daemon for linting
 			})
 			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 

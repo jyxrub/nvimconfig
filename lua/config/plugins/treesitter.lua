@@ -2,7 +2,7 @@ return {
 	{ -- Highlight, edit, and navigate code
 		"nvim-treesitter/nvim-treesitter",
 		build = ":TSUpdate",
-		event = { "BufReadPost", "BufNewFile" }, -- Lazy load on buffer open
+		lazy = false, -- Load eagerly - treesitter is essential for syntax highlighting
 		dependencies = {
 			"nvim-treesitter/nvim-treesitter-textobjects", -- For jump-to-end functionality
 		},
@@ -25,23 +25,25 @@ return {
 				"python",
 				"javascript",
 				"typescript",
+				"tsx", -- TypeScript JSX for React (jsx is included in javascript parser)
+				"css", -- CSS for styling
+				"scss", -- SCSS for styling
 				"json",
 				"yaml",
 			},
 			-- Autoinstall languages that are not installed
 			auto_install = true,
 
-			-- Performance: Disable for large files
-			disable = function(lang, buf)
-				local max_filesize = 100 * 1024 -- 100 KB
-				local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-				if ok and stats and stats.size > max_filesize then
-					return true
-				end
-			end,
-
 			highlight = {
 				enable = true,
+				-- Performance: Disable for large files
+				disable = function(lang, buf)
+					local max_filesize = 100 * 1024 -- 100 KB
+					local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+					if ok and stats and stats.size > max_filesize then
+						return true
+					end
+				end,
 				-- PERFORMANCE: Disable additional regex highlighting except where needed
 				additional_vim_regex_highlighting = { "ruby" },
 			},
