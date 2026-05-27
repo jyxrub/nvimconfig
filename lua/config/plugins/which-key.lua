@@ -17,6 +17,12 @@ return {
       local tsbuiltin = require("telescope.builtin")
 
       wk.add({
+        -- File tree
+        { "<leader>e",  "<cmd>Neotree toggle<cr>",  desc = "Toggle file tree" },
+
+        -- Terminal
+        { "<leader>t",  "<cmd>ToggleTerminal<cr>",  desc = "Toggle floating terminal" },
+
         -- Basic editing
         { "<leader>d",  '"_d',                     desc = "Delete without yanking",    mode = { "n", "v" } },
 

@@ -17,13 +17,7 @@ return {
         },
       })
 
-      vim.keymap.set("n", "<leader>e", function()
-        require("neo-tree.command").execute({ toggle = true, dir = vim.loop.cwd() })
-      end, {
-        desc = "Toggle Neo-tree",
-        silent = true,
-        noremap = true,
-      })
+      -- Keymap moved to which-key.lua for centralized management
     end,
     lazy = false, -- neo-tree will lazily load itself
   },

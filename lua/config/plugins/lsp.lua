@@ -73,6 +73,23 @@ return {
 					--  the definition of its *type*, not where it was *defined*.
 					map("<leader>gt", require("telescope.builtin").lsp_type_definitions, "[G]oto [T]ype Definition")
 
+					-- Hover (requires hover.nvim)
+					local ok, hover = pcall(require, "hover")
+					if ok then
+						local wk = require("which-key")
+						wk.add({
+							{ "<leader>h",  group = "Hover", buffer = event.buf },
+							{ "<leader>hh", hover.hover,       buffer = event.buf, desc = "Show hover doc" },
+							{ "<leader>hs", hover.hover_select, buffer = event.buf, desc = "Select from hover" },
+							{ "<leader>hp", function()
+								hover.hover_switch("previous")
+							end, buffer = event.buf, desc = "Previous hover source" },
+							{ "<leader>hn", function()
+								hover.hover_switch("next")
+							end, buffer = event.buf, desc = "Next hover source" },
+						})
+					end
+
 					-- The following code creates a keymap to toggle inlay hints in your
 					-- code, if the language server you are using supports them
 					--
